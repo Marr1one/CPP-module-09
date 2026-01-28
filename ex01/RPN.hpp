@@ -6,7 +6,7 @@
 /*   By: marwan <marwan@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/25 22:03:33 by marwan            #+#    #+#             */
-/*   Updated: 2025/11/27 17:47:58 by marwan           ###   ########.fr       */
+/*   Updated: 2026/01/28 16:59:06 by marwan           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,10 +18,12 @@ class RPN
 {
     public:
         RPN(std::string expression);
+        RPN(const RPN &other);
+        RPN &operator=(const RPN &other);
         ~RPN();
         void displayExpr();
         std::string trimExpr();
-        std::string getExpression();
+        std::string getExpression() const;
         bool checkChars();
         int calculate();
         private:

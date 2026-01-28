@@ -6,7 +6,7 @@
 /*   By: marwan <marwan@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/25 22:04:39 by marwan            #+#    #+#             */
-/*   Updated: 2025/11/29 14:46:25 by marwan           ###   ########.fr       */
+/*   Updated: 2026/01/28 17:31:52 by marwan           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,21 @@ RPN::RPN(std::string expression)
 
 RPN::~RPN(){}
 
-std::string RPN::getExpression()
+RPN::RPN(const RPN &other)
+{
+    *this = other;
+}
+
+RPN &RPN::operator=(const RPN &other)
+{
+    if (this != &other)
+    {
+        this->_expression = other._expression;
+    }
+    return (*this);
+}
+
+std::string RPN::getExpression() const
 {
     return (_expression);
 }
@@ -33,13 +47,8 @@ std::string RPN::trimExpr()
 {
     std::string original = getExpression();
     std::string trim;
-    int i = 0;
-    while (i < original.length())
-    {
-        if (original[i] != ' ')
-            trim.push_back(original[i]);
-        i++;
-    }
+    for(int i = 0; i < original.size(); i++)
+        if (original[i] != ' ') trim.push_back(original[i]);
     std::cout << "original => " << original << std::endl;
     std::cout << "trimmed => " << trim << std::endl;
     return (trim);
@@ -48,14 +57,9 @@ std::string RPN::trimExpr()
 bool RPN::checkChars()
 {
     std::string trimmed = this->trimExpr();
+    std::string valid = "0123456789+-*/";
     for(int i = 0; i < trimmed.length() ; i++)
-    {
-        if (trimmed[i] < '0' || trimmed[i] > '9')
-        {
-            if(trimmed[i] != '+' && trimmed[i] != '*' && trimmed[i] != '/' && trimmed[i] != '-')
-                return (false);
-        }
-    }
+        if (valid.find(trimmed[i]) == std::string::npos) return (false);
     return (true);
 }
 
@@ -75,13 +79,10 @@ bool isOperator(char c)
 
 int doOp(int a,int b, char c)
 {
-    if (c == '+')
-        return (a + b);
-    if (c == '-')
-        return (a - b);
-    if (c == '*')
-        return (a * b);
-    return (a / b);
+    if (c == '+') return (a + b);
+    else if (c == '-') return (a - b);
+    else if (c == '*') return (a * b);
+    else return (a / b);
 }
 
 int RPN::calculate()
@@ -96,10 +97,9 @@ int RPN::calculate()
     {
         if (isNum(expr[i]))
             st.push(expr[i] - '0');
-        if (isOperator(expr[i]))
+        else if (isOperator(expr[i]))
         {
-            if (st.size() < 2)
-                throw std::runtime_error("Error size < 2\n");
+            if (st.size() < 2) throw std::runtime_error("Error size < 2\n");
             b = st.top();
             st.pop();
             a = st.top();
@@ -116,4 +116,4 @@ int RPN::calculate()
 // 3 parser que des chiffres et operatations
 // faire les fonctions pour les operations !
 // 4 faire le calcule: stocker les chiffres
-// deux chiffres max peuvent etre stocke
+// deux chiffres max peuvent etre stockes

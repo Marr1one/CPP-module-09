@@ -6,73 +6,76 @@
 /*   By: marwan <marwan@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/30 13:55:18 by marwan            #+#    #+#             */
-/*   Updated: 2025/11/30 18:06:11 by marwan           ###   ########.fr       */
+/*   Updated: 2026/01/28 17:22:55 by marwan           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "PmergeMe.hpp"
 
-Merge::Merge(){};
+Merge::Merge() : _has_leftover(false){};
 
 Merge::~Merge(){};
+
+
+std::vector<std::string> split(std::vector<std::string> args, char c)
+{
+    std::vector<std::string> res;
+    std::stringstream ss(args[0]);
+    std::string word;
+    while (ss >> word)
+        res.push_back(word);
+    return (res);
+}
 
 
 void Merge::displayPairs()
 {
     std::vector<std::pair<int,int>> pairs = getPairs();
-    
-    
      for (int i = 0; i < pairs.size(); i ++)
-    {
         std::cout << "("  << pairs[i].first << ", " << pairs[i].second << ")\n";
-    }
 }
 
-void Merge::displayTab()
-{
-    std::vector<char *> tab = getTab();
+// void Merge::displayTab()
+// {
+//     std::vector<char *> tab = getTab();
     
-     for (int i = 0; i < tab.size(); i++)
-    {
-        std::cout << tab[i] << std::endl;
-    }
-}
+//      for (int i = 0; i < tab.size(); i++)
+//     {
+//         std::cout << tab[i] << std::endl;
+//     }
+// }
 
-std::vector<std::pair<int, int>> Merge::getPairs()
+std::vector<std::pair<int, int>> Merge::getPairs() const 
 {
     return (this->_pairs);
 }
 
-std::vector<char*> Merge::getTab()
-{
-    return (this->_tab);
-}
-
-void Merge::makeTab(int argc, char **argv)
-{
-    std::vector<char*> res;
-    for (int i = 1; i < argc;   i++)
-    {
-        // peut etre fait dans le parsing en vrai
-        res.push_back(argv[i]);
-    }
-    _tab = res;
-}
+// void Merge::makeTab(int argc, char **argv)
+// {
+//     std::vector<char*> res;
+//     for (int i = 1; i < argc;   i++)
+//     {
+//         // peut etre fait dans le parsing en vrai
+//         res.push_back(argv[i]);
+//     }
+//     _tab = res;
+// }
 
 
-std::vector<std::pair<int, int>> Merge::makePairs(int argc ,char **argv)
+std::vector<std::pair<int, int>> Merge::makePairs(std::vector<std::string> args)
 {
     std::vector<std::pair<int, int>> pairs;
-    int nb_args = argc - 1;
 
-    if (nb_args % 2 != 0)
+    if (args.size() % 2 != 0)
     {
-        _leftover = atoi(argv[argc - 1]);
+        std::cout << "dans le cas impair\n";
+        _leftover = atoi(args[args.size() - 1].c_str());
+        _has_leftover = true;
         std::cout << "leftover => "<<_leftover << std::endl;
-        for (int i = 1; i + 1 < argc - 1 ; i += 2)
+        for (int i = 0; i + 1 < args.size() - 1 ; i += 2)
         {
-            int a = atoi(argv[i]);
-            int b = atoi(argv[i + 1]);
+            int a = std::stoi(args[i]);
+            int b = std::stoi(args[i + 1]);
             if(a > b)
                 pairs.push_back(std::make_pair(b,a));
             else
@@ -81,10 +84,11 @@ std::vector<std::pair<int, int>> Merge::makePairs(int argc ,char **argv)
     }
     else 
     {
-        for (int i = 1; i + 1 < argc ; i += 2)
+        std::cout << "dans le cas pair\n";
+        for (int i = 0; i + 1 < args.size() ; i += 2)
         {
-            int a = atoi(argv[i]);
-            int b = atoi(argv[i + 1]);
+           int a = std::stoi(args[i]);
+            int b = std::stoi(args[i + 1]);
             if(a > b)
                 pairs.push_back(std::make_pair(b,a));
             else
@@ -95,9 +99,6 @@ std::vector<std::pair<int, int>> Merge::makePairs(int argc ,char **argv)
     return (pairs);
 }
 
-
-
-
 void Merge::sort_bigs()
 {
     std::vector<int> res;
@@ -105,9 +106,7 @@ void Merge::sort_bigs()
 
     
     for(int i = 0; i < pairs.size() ; i++)
-    {
         res.push_back(pairs[i].second);
-    }
     std::sort(res.begin(), res.end());
     std::cout << "BIGS\n";
     show_vector(res);
@@ -121,11 +120,58 @@ void Merge::sort_smalls()
 
     
     for(int i = 0; i < pairs.size() ; i++)
-    {
         res.push_back(pairs[i].first);
-    }
     std::sort(res.begin(), res.end());
     std::cout << "SMALLS\n";
     show_vector(res);
     _smalls = res;
 }
+
+std::vector<int> Merge::generateJacobSthal(int n)
+{
+    std::vector<int> res;
+
+    res.push_back(0);
+    res.push_back(1);
+    int val = 1;
+    while (val < n)
+    {
+        val = res[res.size() - 1] + 2 * res[res.size() - 2];
+        res.push_back(val);
+    }
+    return (res);
+}
+
+void Merge::insert(std::vector<int>&vect, int val)
+{
+    if (std::find(vect.begin(), vect.end(), val) == vect.end())
+    {
+        std::vector<int>::iterator it = std::lower_bound(vect.begin(), vect.end(), val);
+        vect.insert(it, val);
+    }
+}
+
+void Merge::mergeInsert()
+{
+    std::vector<int> JacobSt = generateJacobSthal(_bigs.size());
+
+    for (int i = 0; i < JacobSt.size() ; i ++)
+    {
+        int idx = JacobSt[i];
+        if (idx < _bigs.size())
+            insert(_smalls, _bigs[idx]);
+    }
+    if (_has_leftover == true)
+        insert(_smalls, _leftover);
+}
+
+std::vector<int> Merge::getBigs() const
+{
+    return (this->_bigs);
+}
+
+std::vector<int> Merge::getSmalls() const
+{
+    return (this->_smalls);
+}
+
