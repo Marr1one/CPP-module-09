@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   BitcoinExchange.cpp                                :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: marwan <marwan@student.42.fr>              +#+  +:+       +#+        */
+/*   By: maissat <maissat@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/20 14:20:02 by marwan            #+#    #+#             */
-/*   Updated: 2026/01/25 21:22:19 by marwan           ###   ########.fr       */
+/*   Updated: 2026/02/12 17:01:52 by maissat          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,31 +59,60 @@ void BitcoinExchange::display_database()
         std::cout << it->first << "|" << it->second << "\n";
 }
 
-bool BitcoinExchange::isValidDate(std::string date)
+bool ValidAmount(const std::string &str)
+{	
+	int dot = 0;
+	for(int i = 0;i < str.size();i++)
+	{
+		if (str[i] == '.' && i != 0 && dot==0)
+			continue;
+		if (str[i] == '.' && dot==1)
+			return (false);
+		if (!isdigit(str[i])) return (false);
+
+	}
+	return (true);
+}
+
+bool ValidNumber(const std::string &str)
 {
-    std::cout << "dans isValidDate\n";
+	for(int i = 0;i < str.size();i++)
+		if (!isdigit(str[i])) return (false);
+	return (true);
+}
+
+std::string trimSpace(std::string &str)
+{
+	std::string res;
+	for(int i = 0; i<str.size(); i++)
+		if (str[i] != ' ' && str[i] != '\t')res.push_back(str[i]);
+	return (res);
+}
+
+bool BitcoinExchange::isValidDate(const std::string &date)
+{
     size_t minus = date.find('-');
     if (minus == std::string::npos)
         return (false);
     std::string year = date.substr(0, minus);
-    std::cout << "year = > " << year << std::endl;
+	if (!ValidNumber(year)) return false;
     int i_year = atoi(year.c_str());
     if (i_year < 2010 || i_year > 2022)
         return (false);
     size_t save_minus = minus;
     minus = date.find('-', save_minus + 1);
-    std::cout << "DEBUG => minus de month = " << minus << std::endl;
     if (minus == std::string::npos)
         return (false);
     std::string month = date.substr(save_minus + 1, 2);
-     std::cout << "month = > " << month << std::endl;
+	if (!ValidNumber(month)) return false;
     int i_month = atoi(month.c_str());
     if (i_month < 1 || i_month > 12)
         return (false);
     std::string day = date.substr(minus + 1);
-    std::cout << "day = > " << day << std::endl;
+	day = trimSpace(day);
+	if (!ValidNumber(day)) return false;
     int i_day = atoi(day.c_str());//peut etre faire un isdigit pour verifier les 3205dd
-    if (i_day < 1 || i_day > 31)
+    if ((i_month == 2 && i_day > 29) || i_day < 1 || i_day > 31)
         return (false);
     return (true);
 }
@@ -109,10 +138,16 @@ void BitcoinExchange::manage_inputfile(char *inputname)
         std::string date = line.substr(0, pipe);
         if (!isValidDate(date))
         {
-            std::cout << "Error : invalid date\n";
+            std::cout << "Error: bad input = > " << date  << std::endl;
             continue;
         }
         std::string amount = line.substr(pipe + 1);
+		std::string trimmedAmount = trimSpace(amount);
+		if (!ValidAmount(trimmedAmount))
+		{
+			std::cout << "Error: bad amount value = > " << amount << std::endl;
+			continue; 
+		}
         float f_value = atof(amount.c_str());
         if (f_value  < 0)
         {
@@ -130,9 +165,9 @@ void BitcoinExchange::manage_inputfile(char *inputname)
     }
 }
 
-float BitcoinExchange::getValue(std::string date)
+float BitcoinExchange::getValue(const std::string &date) const
 {
-    std::map<std::string, float>::iterator it;
+    std::map<std::string, float>::const_iterator it;
     it = _database.find(date);
     if (it != _database.end())
         return it->second;

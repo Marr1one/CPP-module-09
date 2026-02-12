@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   BitcoinExchange.hpp                                :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: marwan <marwan@student.42.fr>              +#+  +:+       +#+        */
+/*   By: maissat <maissat@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/20 14:18:01 by marwan            #+#    #+#             */
-/*   Updated: 2025/12/12 16:42:56 by marwan           ###   ########.fr       */
+/*   Updated: 2026/02/12 16:57:11 by maissat          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,8 +29,8 @@ class BitcoinExchange
         ~BitcoinExchange();
         bool fill_database();
         void display_database();
-        bool isValidDate(std::string date);
-        float getValue(std::string date);
+        bool isValidDate(const std::string &date);
+        float getValue(const std::string &date) const;
         void manage_inputfile(char *inputname);
 };
 
