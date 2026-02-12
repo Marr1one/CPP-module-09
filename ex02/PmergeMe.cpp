@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   PmergeMe.cpp                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: marwan <marwan@student.42.fr>              +#+  +:+       +#+        */
+/*   By: maissat <maissat@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/30 13:55:18 by marwan            #+#    #+#             */
-/*   Updated: 2026/01/28 17:22:55 by marwan           ###   ########.fr       */
+/*   Updated: 2026/02/12 18:47:38 by maissat          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,7 @@ Merge::Merge() : _has_leftover(false){};
 Merge::~Merge(){};
 
 
-std::vector<std::string> split(std::vector<std::string> args, char c)
+std::vector<std::string> split(std::vector<std::string> args)
 {
     std::vector<std::string> res;
     std::stringstream ss(args[0]);
@@ -30,8 +30,8 @@ std::vector<std::string> split(std::vector<std::string> args, char c)
 
 void Merge::displayPairs()
 {
-    std::vector<std::pair<int,int>> pairs = getPairs();
-     for (int i = 0; i < pairs.size(); i ++)
+    std::vector<std::pair<int,int> > pairs = getPairs();
+     for (size_t i = 0; i < pairs.size(); i ++)
         std::cout << "("  << pairs[i].first << ", " << pairs[i].second << ")\n";
 }
 
@@ -45,7 +45,7 @@ void Merge::displayPairs()
 //     }
 // }
 
-std::vector<std::pair<int, int>> Merge::getPairs() const 
+std::vector<std::pair<int, int> > Merge::getPairs() const 
 {
     return (this->_pairs);
 }
@@ -62,9 +62,9 @@ std::vector<std::pair<int, int>> Merge::getPairs() const
 // }
 
 
-std::vector<std::pair<int, int>> Merge::makePairs(std::vector<std::string> args)
+std::vector<std::pair<int, int> > Merge::makePairs(std::vector<std::string> args)
 {
-    std::vector<std::pair<int, int>> pairs;
+    std::vector<std::pair<int, int> > pairs;
 
     if (args.size() % 2 != 0)
     {
@@ -72,10 +72,10 @@ std::vector<std::pair<int, int>> Merge::makePairs(std::vector<std::string> args)
         _leftover = atoi(args[args.size() - 1].c_str());
         _has_leftover = true;
         std::cout << "leftover => "<<_leftover << std::endl;
-        for (int i = 0; i + 1 < args.size() - 1 ; i += 2)
+        for (size_t i = 0; i + 1 < args.size() - 1 ; i += 2)
         {
-            int a = std::stoi(args[i]);
-            int b = std::stoi(args[i + 1]);
+            int a = std::atoi(args[i].c_str());
+            int b = std::atoi(args[i + 1].c_str());
             if(a > b)
                 pairs.push_back(std::make_pair(b,a));
             else
@@ -85,10 +85,10 @@ std::vector<std::pair<int, int>> Merge::makePairs(std::vector<std::string> args)
     else 
     {
         std::cout << "dans le cas pair\n";
-        for (int i = 0; i + 1 < args.size() ; i += 2)
+        for (size_t i = 0; i + 1 < args.size() ; i += 2)
         {
-           int a = std::stoi(args[i]);
-            int b = std::stoi(args[i + 1]);
+           int a = std::atoi(args[i].c_str());
+            int b = std::atoi(args[i + 1].c_str());
             if(a > b)
                 pairs.push_back(std::make_pair(b,a));
             else
@@ -102,10 +102,10 @@ std::vector<std::pair<int, int>> Merge::makePairs(std::vector<std::string> args)
 void Merge::sort_bigs()
 {
     std::vector<int> res;
-    std::vector<std::pair<int, int>>pairs = getPairs();
+    std::vector<std::pair<int, int> >pairs = getPairs();
 
     
-    for(int i = 0; i < pairs.size() ; i++)
+    for(size_t i = 0; i < pairs.size() ; i++)
         res.push_back(pairs[i].second);
     std::sort(res.begin(), res.end());
     std::cout << "BIGS\n";
@@ -116,10 +116,10 @@ void Merge::sort_bigs()
 void Merge::sort_smalls()
 {
     std::vector<int> res;
-    std::vector<std::pair<int, int>>pairs = getPairs();
+    std::vector<std::pair<int, int> >pairs = getPairs();
 
     
-    for(int i = 0; i < pairs.size() ; i++)
+    for(size_t i = 0; i < pairs.size() ; i++)
         res.push_back(pairs[i].first);
     std::sort(res.begin(), res.end());
     std::cout << "SMALLS\n";
@@ -155,9 +155,9 @@ void Merge::mergeInsert()
 {
     std::vector<int> JacobSt = generateJacobSthal(_bigs.size());
 
-    for (int i = 0; i < JacobSt.size() ; i ++)
+    for (size_t i = 0; i < JacobSt.size() ; i ++)
     {
-        int idx = JacobSt[i];
+        size_t idx = JacobSt[i];
         if (idx < _bigs.size())
             insert(_smalls, _bigs[idx]);
     }

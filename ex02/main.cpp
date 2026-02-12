@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.cpp                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: marwan <marwan@student.42.fr>              +#+  +:+       +#+        */
+/*   By: maissat <maissat@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/30 13:53:33 by marwan            #+#    #+#             */
-/*   Updated: 2026/01/26 01:08:18 by marwan           ###   ########.fr       */
+/*   Updated: 2026/02/12 18:46:00 by maissat          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,7 +27,7 @@
 
 bool isNumberString(std::string str)
 {
-    for (int i = 0; str[i] != '\0'; i++)
+    for (size_t i = 0; str[i] != '\0'; i++)
     {
         if (!isdigit(str[i])&& !isspace(str[i]))
         {
@@ -40,7 +40,7 @@ bool isNumberString(std::string str)
 
 bool parser_vector(std::vector<std::string> vect)
 {
-    for(int i = 0; i < vect.size() ; i++)
+    for(size_t i = 0; i < vect.size() ; i++)
     {
         if (!isNumberString(vect[i]))
         {
@@ -80,7 +80,7 @@ int main(int argc, char **argv)
     if (argc == 2)
     {
         std::vector<std::string> splitted;
-        splitted = split(args, ' ');
+        splitted = split(args);
         std::cout << "after split\n";
         show_vector(splitted);
         args = splitted;
