@@ -6,7 +6,7 @@
 /*   By: maissat <maissat@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/20 14:18:01 by marwan            #+#    #+#             */
-/*   Updated: 2026/02/12 16:57:11 by maissat          ###   ########.fr       */
+/*   Updated: 2026/02/12 18:26:07 by maissat          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,6 +16,7 @@
 #include <iostream>
 #include <map>
 #include <fstream>
+#include <cstdlib>
 #include "limits.h"
 
 class BitcoinExchange

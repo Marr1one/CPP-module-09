@@ -6,7 +6,7 @@
 /*   By: maissat <maissat@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/20 14:20:02 by marwan            #+#    #+#             */
-/*   Updated: 2026/02/12 17:01:52 by maissat          ###   ########.fr       */
+/*   Updated: 2026/02/12 18:26:34 by maissat          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,7 +62,7 @@ void BitcoinExchange::display_database()
 bool ValidAmount(const std::string &str)
 {	
 	int dot = 0;
-	for(int i = 0;i < str.size();i++)
+	for(size_t i = 0;i < str.size();i++)
 	{
 		if (str[i] == '.' && i != 0 && dot==0)
 			continue;
@@ -76,7 +76,7 @@ bool ValidAmount(const std::string &str)
 
 bool ValidNumber(const std::string &str)
 {
-	for(int i = 0;i < str.size();i++)
+	for(size_t i = 0;i < str.size();i++)
 		if (!isdigit(str[i])) return (false);
 	return (true);
 }
@@ -84,7 +84,7 @@ bool ValidNumber(const std::string &str)
 std::string trimSpace(std::string &str)
 {
 	std::string res;
-	for(int i = 0; i<str.size(); i++)
+	for(size_t i = 0; i<str.size(); i++)
 		if (str[i] != ' ' && str[i] != '\t')res.push_back(str[i]);
 	return (res);
 }
