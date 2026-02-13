@@ -6,7 +6,7 @@
 #    By: maissat <maissat@student.42.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/11/30 13:52:54 by marwan            #+#    #+#              #
-#    Updated: 2026/02/12 18:38:57 by maissat          ###   ########.fr        #
+#    Updated: 2026/02/13 17:15:53 by maissat          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -27,7 +27,7 @@ $(NAME) : $(OBJ)
 	c++ $(CFLAGS) $(OBJ) -o $(NAME)
 
 clean : 
-	rm -f obj/*.o
+	rm -f $(OBJ)
 fclean : clean
 	rm -f $(NAME)
 re : fclean $(NAME)

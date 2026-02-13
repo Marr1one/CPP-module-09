@@ -6,7 +6,7 @@
 /*   By: maissat <maissat@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/30 13:54:34 by marwan            #+#    #+#             */
-/*   Updated: 2026/02/12 18:46:14 by maissat          ###   ########.fr       */
+/*   Updated: 2026/02/13 17:40:03 by maissat          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,6 +14,7 @@
 #include <vector>
 #include <algorithm>
 #include <sstream>
+#include <ctime>
 
 
 template <typename T>
@@ -25,7 +26,7 @@ void show_vector(std::vector<T> vect)
 
 std::vector<std::string> split(std::vector<std::string> args);
 
-class Merge 
+class MergeVector
 {
     private:
         std::vector<std::pair<int,int> > _pairs;
@@ -37,8 +38,8 @@ class Merge
         std::vector<int> _smalls;
         std::vector<int> _result;
     public:
-        Merge();
-        ~Merge();
+        MergeVector();
+        ~MergeVector();
         std::vector<std::pair<int, int> > makePairs(std::vector<std::string> args);
         std::vector<std::pair<int, int> > getPairs() const;
         std::vector<int> getSmalls() const;
