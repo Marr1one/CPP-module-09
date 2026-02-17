@@ -6,7 +6,7 @@
 /*   By: maissat <maissat@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/30 13:53:33 by marwan            #+#    #+#             */
-/*   Updated: 2026/02/16 16:41:46 by maissat          ###   ########.fr       */
+/*   Updated: 2026/02/17 17:39:47 by maissat          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -80,39 +80,56 @@ void cleanshow(const Container& c)
 	}
 	std::cout << std::endl;
 }
-//--------------------------------------------____FAUT QUE JE RETURN SI JE DETECTE DOUBLON----------------------------------
+
+
+template<typename Container>
+bool detect_duplicate(const Container &v)
+{
+	for(size_t i = 0;i < v.size();i++)
+	{
+		for(size_t j=i+1;j<v.size();j++)
+		{
+			if (v[j]==v[i])
+			{
+				std::cout << "doublon = > " << v[j] << std::endl;
+				return (false);
+			}
+		}
+	}
+	return (true);
+}
+
+
 int main(int argc, char **argv)
 {
-
+	
 	std::cout << "--------------TRI UTILISANT VECTOR---------------\n";
-    if (argc < 2)
-        return (std::cerr << "Error\n not enough args\n", 1);
+	
+    if (argc < 2) return (std::cerr << "Error\n not enough args\n", 1);
     std::vector<std::string> args_vec = argv_to_string<std::vector<std::string> >(argc ,argv);
     if (argc == 2)
     {
         std::vector<std::string> splitted;
         splitted = split(args_vec);
-        std::cout << "after split\n";
-        //show_vector(splitted);
         args_vec = splitted;
     }
-    if (!parser(args_vec))
-        return (std::cerr << "Invalid inputs\n", 1);
+	if (!detect_duplicate<std::vector<std::string> >(args_vec)) return (std::cerr << "Error: duplicate detected !\n",1);
+    if (!parser(args_vec)) return (std::cerr << "Invalid inputs\n", 1);
     PmergeMe m;
 	std::cout <<"Before :";
 	cleanshow<std::vector<std::string> >(args_vec);
 	clock_t start = std::clock();
     m.makePairs_vect(args_vec);
     //m.displayPairs();
-    m.sort_smalls_vect();
     m.sort_bigs_vect();
+    m.sort_smalls_vect();
     m.mergeInsert();
     //std::cout << "smalls after merge insert\n";
     //show_vector(m.getSmalls());
 	clock_t end = std::clock();
 	double time = static_cast<double>(end-start) / CLOCKS_PER_SEC * 1000000;
 	std::cout <<"After :";
-	cleanshow(m.getSmalls_vect());
+	cleanshow(m.get_result());
 	std::cout << "Time to process a range of "
 		<< args_vec.size() << " elements with std::vector :"
 		<< time << " us" << std::endl;
@@ -122,12 +139,9 @@ int main(int argc, char **argv)
     {
         std::deque<std::string> splitted;
         splitted = split<std::deque<std::string> >(args_deque);
-        std::cout << "after split\n";
-        //show_vector(splitted);
         args_deque = splitted;
     }
-	if (!parser(args_deque))
-        return (std::cerr << "Invalid inputs\n", 1);
+	if (!parser(args_deque)) return (std::cerr << "Invalid inputs\n", 1);
     PmergeMe mdeque;
 	std::cout <<"Before :";
 	cleanshow<std::deque<std::string> >(args_deque);
