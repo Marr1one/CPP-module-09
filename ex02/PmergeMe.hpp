@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   PmergeMe.hpp                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: maissat <maissat@student.42.fr>            +#+  +:+       +#+        */
+/*   By: marwan <marwan@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/30 13:54:34 by marwan            #+#    #+#             */
-/*   Updated: 2026/02/17 17:22:33 by maissat          ###   ########.fr       */
+/*   Updated: 2026/02/17 21:41:59 by marwan           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,19 +42,40 @@ Container split(const Container &args)
     return res;
 }
 
+
 class PmergeMe
 {
     private:
         std::vector<std::pair<int,int> > _pairs_vect;
 		std::deque<std::pair<int,int> > _pairs_deque;
+		// template <typename Container>
+		// void insert(Container &c, int start, int bound)
+		// {
+		// 	int val = c[start];
+		// 	if (std::find(c.begin(), c.end(), start) == c.end())
+		// 	{
+		// 		typename Container::iterator it = std::lower_bound(start, bound, val);
+		// 		c.insert(it, val);
+		// 	}
+		// }
 		template <typename Container>
-		void insert(Container &c, int val)
+		void insertLeftover(Container &c, int leftover)
 		{
-			if (std::find(c.begin(), c.end(), val) == c.end())
+			if (std::find(c.begin(), c.end(), leftover) == c.end())
 			{
-				typename Container::iterator it = std::lower_bound(c.begin(), c.end(), val);
-				c.insert(it, val);
+				typename Container::iterator it = std::lower_bound(c.begin(), c.end(), leftover);
+				c.insert(it, leftover);
 			}
+		}
+		template <typename Container>
+		void insertBounded(Container &c, size_t idx)
+		{
+			int small = _pairs_vect[idx].first;
+			int big = _pairs_vect[idx].second;
+
+			std::vector<int>::iterator bound = std::find(c.begin(),c.end(),big);
+			std::vector<int>::iterator pos = std::lower_bound(c.begin(),bound,small);
+			c.insert(pos,small);
 		}
         std::vector<char *> _tab;
         int _leftover;
