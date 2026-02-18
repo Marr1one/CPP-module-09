@@ -6,7 +6,7 @@
 /*   By: marwan <marwan@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/30 13:54:34 by marwan            #+#    #+#             */
-/*   Updated: 2026/02/17 21:41:59 by marwan           ###   ########.fr       */
+/*   Updated: 2026/02/18 17:57:07 by marwan           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,17 +67,8 @@ class PmergeMe
 				c.insert(it, leftover);
 			}
 		}
-		template <typename Container>
-		void insertBounded(Container &c, size_t idx)
-		{
-			int small = _pairs_vect[idx].first;
-			int big = _pairs_vect[idx].second;
-
-			std::vector<int>::iterator bound = std::find(c.begin(),c.end(),big);
-			std::vector<int>::iterator pos = std::lower_bound(c.begin(),bound,small);
-			c.insert(pos,small);
-		}
-        std::vector<char *> _tab;
+		void insertBounded(std::vector<int> &c, size_t idx);
+		void insertBounded_deque(std::deque<int> &c, size_t idx);
         int _leftover;
         std::vector<int> _bigs_vect;
         std::vector<int> _smalls_vect;

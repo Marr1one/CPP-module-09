@@ -6,7 +6,7 @@
 /*   By: marwan <marwan@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/30 13:55:18 by marwan            #+#    #+#             */
-/*   Updated: 2026/02/17 21:43:17 by marwan           ###   ########.fr       */
+/*   Updated: 2026/02/18 17:59:21 by marwan           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,6 +42,7 @@ void PmergeMe::displayPairs()
      for (size_t i = 0; i < pairs.size(); i ++)
         std::cout << "("  << pairs[i].first << ", " << pairs[i].second << ")\n";
 }
+
 void PmergeMe::displayPairs_deque()
 {
     std::deque<std::pair<int,int> > pairs = getPairs_deque();
@@ -199,22 +200,49 @@ void PmergeMe::mergeInsert()
 }
 
 
-// void PmergeMe::mergeInsert_deque()
-// {
-// 	std::deque<int>res=_bigs_deque;
-// 	std::deque<int> JacobSt = generateJacobSthal<std::deque<int> >(_smalls_deque.size());
-// 	for (size_t i = 0; i < JacobSt.size() ;i++)
-// 	{
-// 		size_t idx = JacobSt[i];
-// 		if (idx < _smalls_deque.size())
-// 			insert(res, _smalls_deque[idx]);
-// 	}
-// 	for(size_t i =0; i < _smalls_deque.size();i++)
-// 		insert(res,_smalls_deque[i]);
-// 	if (_has_leftover == true)
-// 		insert(res, _leftover);
-// 	_smalls_deque =res;
-// }
+void PmergeMe::insertBounded(std::vector<int> &c, size_t idx)
+{
+	int small = _pairs_vect[idx].first;
+	int big = _pairs_vect[idx].second;
+
+	std::vector<int>::iterator bound = std::find(c.begin(),c.end(),big);
+	std::vector<int>::iterator pos = std::lower_bound(c.begin(),bound,small);
+	c.insert(pos,small);
+}
+
+void PmergeMe::insertBounded_deque(std::deque<int> &c, size_t idx)
+{
+	int small = _pairs_deque[idx].first;
+	int big = _pairs_deque[idx].second;
+
+	std::deque<int>::iterator bound = std::find(c.begin(),c.end(),big);
+	std::deque<int>::iterator pos = std::lower_bound(c.begin(),bound,small);
+	c.insert(pos,small);
+}
+void PmergeMe::mergeInsert_deque()
+{
+	std::deque<bool> inserted (this->_smalls_deque.size(), false);
+	std::deque<int>res=_bigs_deque;
+	std::deque<int> JacobSt = generateJacobSthal<std::deque<int> >(_smalls_deque.size());
+	for (size_t i = 0; i < JacobSt.size() ; i ++)
+	{
+		size_t idx = JacobSt[i];
+		if (idx < _smalls_deque.size() && !inserted[idx])
+		{
+			insertBounded_deque(res, idx);
+			inserted[idx]=true;
+		}
+	}
+	for(size_t i =0; i < _smalls_deque.size();i++)
+	{
+		if (!inserted[i])
+			insertBounded_deque(res, i);
+	}
+	if (_has_leftover == true)
+		insertLeftover(res, _leftover);
+	_smalls_deque =res;
+}
+
 
 std::vector<int> PmergeMe::getBigs_vect() const
 {
@@ -236,10 +264,6 @@ std::deque<int> PmergeMe::getSmalls_deq() const
 	return (this->_smalls_deque);
 }
 
-std::vector<int> PmergeMe::get_result() const
-{
-	return (this->_result);
-}
 
 int PmergeMe::getLeftover() const
 {

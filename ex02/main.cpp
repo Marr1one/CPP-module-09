@@ -6,7 +6,7 @@
 /*   By: marwan <marwan@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/30 13:53:33 by marwan            #+#    #+#             */
-/*   Updated: 2026/02/17 21:31:52 by marwan           ###   ########.fr       */
+/*   Updated: 2026/02/18 17:47:36 by marwan           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -133,38 +133,38 @@ int main(int argc, char **argv)
 	std::cout << "Time to process a range of "
 		<< args_vec.size() << " elements with std::vector :"
 		<< time << " us" << std::endl;
-	// std::cout << "---------------TRI UTILISANT DEQUE---------------\n";
-	// std::deque<std::string> args_deque = argv_to_string<std::deque<std::string> >(argc ,argv);
-	// if (argc == 2)
-    // {
-    //     std::deque<std::string> splitted;
-    //     splitted = split<std::deque<std::string> >(args_deque);
-    //     args_deque = splitted;
-    // }
-	// if (!parser(args_deque)) return (std::cerr << "Invalid inputs\n", 1);
-    // PmergeMe mdeque;
-	// std::cout <<"Before :";
-	// cleanshow<std::deque<std::string> >(args_deque);
-	// clock_t start_deque = std::clock();
-	// //for(size_t i = 0; i < args_deque.size();i++)
-	// //{
-	// //	std::cout << args_deque[i] << std::endl;
-	// //}
-    // mdeque.makePairs_deque(args_deque);
-    // //mdeque.displayPairs_deque();
-	// //if (mdeque._has_leftover)std::cout << "leftover = > " << mdeque.getLeftover() << std::endl;
-    // mdeque.sort_smalls_deque();
-    // mdeque.sort_bigs_deque();
-	// //std::cout << "DEBUG\n" << std::endl;
-    // mdeque.mergeInsert_deque();
-    // //std::cout << "smalls after merge insert\n";
-    // //show_vector(m.getSmalls());
-	// clock_t end_deque = std::clock();
-	// double time_deque = static_cast<double>(end_deque-start_deque) / CLOCKS_PER_SEC * 1000000;
-	// std::cout <<"After :";
-	// cleanshow(mdeque.getSmalls_deq());
-	// std::cout << "Time to process a range of "
-	// 	<< args_deque.size() << " elements with std::deque :"
-	// 	<< time_deque << " us" << std::endl;
+	std::cout << "---------------TRI UTILISANT DEQUE---------------\n";
+	std::deque<std::string> args_deque = argv_to_string<std::deque<std::string> >(argc ,argv);
+	if (argc == 2)
+    {
+        std::deque<std::string> splitted;
+        splitted = split<std::deque<std::string> >(args_deque);
+        args_deque = splitted;
+    }
+	if (!parser(args_deque)) return (std::cerr << "Invalid inputs\n", 1);
+    PmergeMe mdeque;
+	std::cout <<"Before :";
+	cleanshow<std::deque<std::string> >(args_deque);
+	clock_t start_deque = std::clock();
+	//for(size_t i = 0; i < args_deque.size();i++)
+	//{
+        //	std::cout << args_deque[i] << std::endl;
+        //}
+    mdeque.makePairs_deque(args_deque);
+    //mdeque.displayPairs_deque();
+    //if (mdeque._has_leftover)std::cout << "leftover = > " << mdeque.getLeftover() << std::endl;
+    mdeque.sort_bigs_deque();
+    mdeque.sort_smalls_deque();
+    mdeque.mergeInsert_deque();
+    std::cout << "DEBUG\n";
+    //std::cout << "smalls after merge insert\n";
+    //show_vector(m.getSmalls());
+	clock_t end_deque = std::clock();
+	double time_deque = static_cast<double>(end_deque-start_deque) / CLOCKS_PER_SEC * 1000000;
+	std::cout <<"After :";
+	cleanshow(mdeque.getSmalls_deq());
+	std::cout << "Time to process a range of "
+		<< args_deque.size() << " elements with std::deque :"
+		<< time_deque << " us" << std::endl;
     return (0);
 }
