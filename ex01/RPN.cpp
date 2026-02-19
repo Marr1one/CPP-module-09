@@ -6,7 +6,7 @@
 /*   By: maissat <maissat@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/25 22:04:39 by marwan            #+#    #+#             */
-/*   Updated: 2026/02/12 18:34:29 by maissat          ###   ########.fr       */
+/*   Updated: 2026/02/19 15:49:07 by maissat          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -102,8 +102,8 @@ bool RPN::checkExpr()
 {
 	int nbOp = countOp(this->_expression);
 	int nbDigit = countDigit(this->_expression);
-	if (nbOp==0)return (false);
-	else if (nbOp != nbDigit - 1) return (false);
+	//if (nbOp==0)return (false);
+	if (nbOp != nbDigit - 1) return (false);
 	else return (true);
 }
 	
@@ -123,11 +123,12 @@ int RPN::calculate()
             st.push(trimmedExpr[i] - '0');
         else if (isOperator(trimmedExpr[i]))
         {
-            if (st.size() < 2) throw std::runtime_error("Error size  < 2\n");
+            if (st.size() < 2) throw std::runtime_error("Error: size  < 2");
             b = st.top();
             st.pop();
             a = st.top();
             st.pop();
+			if (b==0 && trimmedExpr[i] == '/') throw std::runtime_error("Error: can't divide by 0");
             int res = doOp(a,b, trimmedExpr[i]);
             st.push(res);     
         }

@@ -6,7 +6,7 @@
 /*   By: maissat <maissat@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/30 13:53:33 by marwan            #+#    #+#             */
-/*   Updated: 2026/02/19 14:54:41 by maissat          ###   ########.fr       */
+/*   Updated: 2026/02/19 15:12:52 by maissat          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,30 +25,13 @@ bool isNumberString(std::string str)
     return (true);
 }
 
-//bool parser_vector(std::vector<std::string> vect)
-//{
-//    for(size_t i = 0; i < vect.size() ; i++)
-//    {
-//        if (!isNumberString(vect[i]))
-//        {
-//            std::cout << "DEBUG  argv[i] => {" << vect[i] << "}\n";
-//            return (false);
-//        }
-//    }
-//    return (true);
-//}
-
 template <typename Container>
-
 bool parser(const Container &c)
 {
     for(size_t i = 0; i < c.size() ; i++)
     {
         if (!isNumberString(c[i]))
-        {
-            std::cout << "DEBUG  argv[i] => {" << c[i] << "}\n";
             return (false);
-        }
     }
     return (true);
 }
@@ -120,8 +103,8 @@ int main(int argc, char **argv)
 	cleanshow<std::vector<std::string> >(args_vec);
 	clock_t start = std::clock();
     m.makePairs_vect(args_vec);
-    m.sort_bigs_vect();
-    m.sort_smalls_vect();
+    m.sort_pairs_vect();
+    m.create_smalls_vect();
     m.mergeInsert();
 	clock_t end = std::clock();
 	double time = static_cast<double>(end-start) / CLOCKS_PER_SEC * 1000000;
@@ -130,15 +113,20 @@ int main(int argc, char **argv)
 	std::cout << "Time to process a range of "
 		<< args_vec.size() << " elements with std::vector :"
 		<< time << " us" << std::endl;
+
+		
 	std::cout << "---------------TRI UTILISANT DEQUE---------------\n";
+
+
+	
 	std::deque<std::string> args_deque = argv_to_string<std::deque<std::string> >(argc ,argv);
     PmergeMe mdeque;
 	std::cout <<"Before :";
 	cleanshow<std::deque<std::string> >(args_deque);
 	clock_t start_deque = std::clock();
     mdeque.makePairs_deque(args_deque);
-    mdeque.sort_bigs_deque();
-    mdeque.sort_smalls_deque();
+    mdeque.sort_pairs_deque();
+    mdeque.create_smalls_deque();
     mdeque.mergeInsert_deque();
 	clock_t end_deque = std::clock();
 	double time_deque = static_cast<double>(end_deque-start_deque) / CLOCKS_PER_SEC * 1000000;

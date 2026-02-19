@@ -6,7 +6,7 @@
 /*   By: maissat <maissat@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/20 14:20:02 by marwan            #+#    #+#             */
-/*   Updated: 2026/02/12 18:26:34 by maissat          ###   ########.fr       */
+/*   Updated: 2026/02/19 15:24:57 by maissat          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -161,7 +161,7 @@ void BitcoinExchange::manage_inputfile(char *inputname)
         }
         float valuecsv = getValue(date);
         float res = f_value * valuecsv;
-        std::cout << line << " => " <<  res << std::endl;
+        std::cout << date << " => " <<  trimmedAmount <<  " = " << res << std::endl;
     }
 }
 

@@ -6,7 +6,7 @@
 /*   By: maissat <maissat@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/30 13:54:34 by marwan            #+#    #+#             */
-/*   Updated: 2026/02/19 14:54:11 by maissat          ###   ########.fr       */
+/*   Updated: 2026/02/19 15:14:59 by maissat          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,8 +51,6 @@ class PmergeMe
         std::vector<int> _smalls_vect;
 		std::deque<int> _bigs_deque;
         std::deque<int> _smalls_deque;
-        std::vector<int> _result;
-		std::deque<int> _result_deque;
     public:
         bool _has_leftover;
         PmergeMe();
@@ -61,6 +59,12 @@ class PmergeMe
 		PmergeMe &operator=(const PmergeMe &other);
         std::vector<std::pair<int, int> > makePairs_vect(std::vector<std::string> args);
 		std::deque<std::pair<int, int> > makePairs_deque(std::deque<std::string> args);
+        void sort_pairs_vect();
+        void create_smalls_vect();
+		void create_smalls_deque();
+		void sort_pairs_deque();
+        void mergeInsert();
+		void mergeInsert_deque();
         std::vector<std::pair<int, int> > getPairs_vect() const;
 		std::deque<std::pair<int, int> > getPairs_deque() const;
         std::vector<int> getSmalls_vect() const;
@@ -68,14 +72,8 @@ class PmergeMe
         std::vector<int> getBigs_vect() const;
 		std::deque<int> getBigs_deq() const;
 		int getLeftover() const;
-        void displayPairs();
-		void displayPairs_deque();
-        void sort_bigs_vect();
-        void sort_smalls_vect();
-		void sort_smalls_deque();
-		void sort_bigs_deque();
-        void mergeInsert();
-		void mergeInsert_deque();
+        //void displayPairs(); //utile au cas ou pour voir les pairs ! 
+		//void displayPairs_deque();
 		template <typename Container>
 		Container generateJacobSthal(size_t n)
 		{

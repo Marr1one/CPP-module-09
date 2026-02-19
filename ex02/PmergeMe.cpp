@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   PmergeMe.cpp                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: marwan <marwan@student.42.fr>              +#+  +:+       +#+        */
+/*   By: maissat <maissat@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/30 13:55:18 by marwan            #+#    #+#             */
-/*   Updated: 2026/02/18 17:59:21 by marwan           ###   ########.fr       */
+/*   Updated: 2026/02/19 15:12:52 by maissat          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,19 +36,6 @@ PmergeMe &PmergeMe::operator=(const PmergeMe &other)
 	return (*this);
 }
 
-void PmergeMe::displayPairs()
-{
-    std::vector<std::pair<int,int> > pairs = getPairs_vect();
-     for (size_t i = 0; i < pairs.size(); i ++)
-        std::cout << "("  << pairs[i].first << ", " << pairs[i].second << ")\n";
-}
-
-void PmergeMe::displayPairs_deque()
-{
-    std::deque<std::pair<int,int> > pairs = getPairs_deque();
-     for (size_t i = 0; i < pairs.size(); i ++)
-        std::cout << "("  << pairs[i].first << ", " << pairs[i].second << ")\n";
-}
 
 std::vector<std::pair<int, int> > PmergeMe::getPairs_vect() const 
 {
@@ -134,7 +121,7 @@ bool comparePairs(const std::pair<int, int> &a ,const std::pair<int, int> &b)
 	return (a.second < b.second);
 }
 
-void PmergeMe::sort_bigs_vect()
+void PmergeMe::sort_pairs_vect()
 {
 	std::vector<int> res;
 
@@ -145,7 +132,7 @@ void PmergeMe::sort_bigs_vect()
 }
 
 
-void PmergeMe::sort_smalls_vect()
+void PmergeMe::create_smalls_vect()
 {
 	std::vector<int> res;
 	
@@ -154,7 +141,7 @@ void PmergeMe::sort_smalls_vect()
 	_smalls_vect = res;
 }
 
-void PmergeMe::sort_bigs_deque()
+void PmergeMe::sort_pairs_deque()
 {
 	std::deque<int> res;
 
@@ -165,7 +152,7 @@ void PmergeMe::sort_bigs_deque()
 }
 
 
-void PmergeMe::sort_smalls_deque()
+void PmergeMe::create_smalls_deque()
 {
 	std::deque<int> res;
 
@@ -269,3 +256,17 @@ int PmergeMe::getLeftover() const
 {
 	return this->_leftover;
 }
+
+//void PmergeMe::displayPairs()
+//{
+//    std::vector<std::pair<int,int> > pairs = getPairs_vect();
+//     for (size_t i = 0; i < pairs.size(); i ++)
+//        std::cout << "("  << pairs[i].first << ", " << pairs[i].second << ")\n";
+//}
+
+//void PmergeMe::displayPairs_deque()
+//{
+//    std::deque<std::pair<int,int> > pairs = getPairs_deque();
+//     for (size_t i = 0; i < pairs.size(); i ++)
+//        std::cout << "("  << pairs[i].first << ", " << pairs[i].second << ")\n";
+//}
