@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   PmergeMe.hpp                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: marwan <marwan@student.42.fr>              +#+  +:+       +#+        */
+/*   By: maissat <maissat@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/30 13:54:34 by marwan            #+#    #+#             */
-/*   Updated: 2026/02/18 17:57:07 by marwan           ###   ########.fr       */
+/*   Updated: 2026/02/19 14:54:11 by maissat          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,6 +20,7 @@
 #include <sstream>
 #include <ctime>
 #include <deque>
+#include <climits>
 
 
 template <typename T>
@@ -28,36 +29,12 @@ void show_vector(std::vector<T> vect)
     for (size_t i =0; i < vect.size() ; i++)
         std::cout << "vect[ "<< i << "] =>" << vect[i] << std::endl;
 }
-template <typename Container>
-Container split(const Container &args)
-{
-    Container res;
-
-    std::stringstream ss(args[0]);
-    std::string word;
-
-    while (ss >> word)
-        res.push_back(word);
-
-    return res;
-}
-
 
 class PmergeMe
 {
     private:
         std::vector<std::pair<int,int> > _pairs_vect;
 		std::deque<std::pair<int,int> > _pairs_deque;
-		// template <typename Container>
-		// void insert(Container &c, int start, int bound)
-		// {
-		// 	int val = c[start];
-		// 	if (std::find(c.begin(), c.end(), start) == c.end())
-		// 	{
-		// 		typename Container::iterator it = std::lower_bound(start, bound, val);
-		// 		c.insert(it, val);
-		// 	}
-		// }
 		template <typename Container>
 		void insertLeftover(Container &c, int leftover)
 		{
@@ -84,14 +61,12 @@ class PmergeMe
 		PmergeMe &operator=(const PmergeMe &other);
         std::vector<std::pair<int, int> > makePairs_vect(std::vector<std::string> args);
 		std::deque<std::pair<int, int> > makePairs_deque(std::deque<std::string> args);
-		std::vector<size_t> buildInsertOrder(size_t n);
         std::vector<std::pair<int, int> > getPairs_vect() const;
 		std::deque<std::pair<int, int> > getPairs_deque() const;
         std::vector<int> getSmalls_vect() const;
 		std::deque<int> getSmalls_deq() const;
         std::vector<int> getBigs_vect() const;
 		std::deque<int> getBigs_deq() const;
-		std::vector<int> get_result() const;
 		int getLeftover() const;
         void displayPairs();
 		void displayPairs_deque();

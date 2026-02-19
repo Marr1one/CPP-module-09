@@ -6,11 +6,11 @@
 #    By: maissat <maissat@student.42.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/11/30 13:52:54 by marwan            #+#    #+#              #
-#    Updated: 2026/02/13 17:15:53 by maissat          ###   ########.fr        #
+#    Updated: 2026/02/19 14:16:35 by maissat          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
-NAME = PMergeMe
+NAME = PmergeMe
 
 SRC = main.cpp PmergeMe.cpp
 
