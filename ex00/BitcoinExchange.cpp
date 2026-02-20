@@ -6,7 +6,7 @@
 /*   By: maissat <maissat@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/20 14:20:02 by marwan            #+#    #+#             */
-/*   Updated: 2026/02/19 15:24:57 by maissat          ###   ########.fr       */
+/*   Updated: 2026/02/20 15:53:40 by maissat          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -81,7 +81,7 @@ bool ValidNumber(const std::string &str)
 	return (true);
 }
 
-std::string trimSpace(std::string &str)
+std::string trimSpace(const std::string &str)
 {
 	std::string res;
 	for(size_t i = 0; i<str.size(); i++)
@@ -97,7 +97,7 @@ bool BitcoinExchange::isValidDate(const std::string &date)
     std::string year = date.substr(0, minus);
 	if (!ValidNumber(year)) return false;
     int i_year = atoi(year.c_str());
-    if (i_year < 2010 || i_year > 2022)
+    if (i_year < 2008 || i_year > 2022)
         return (false);
     size_t save_minus = minus;
     minus = date.find('-', save_minus + 1);
@@ -111,7 +111,7 @@ bool BitcoinExchange::isValidDate(const std::string &date)
     std::string day = date.substr(minus + 1);
 	day = trimSpace(day);
 	if (!ValidNumber(day)) return false;
-    int i_day = atoi(day.c_str());//peut etre faire un isdigit pour verifier les 3205dd
+    int i_day = atoi(day.c_str());
     if ((i_month == 2 && i_day > 29) || i_day < 1 || i_day > 31)
         return (false);
     return (true);
@@ -173,8 +173,9 @@ float BitcoinExchange::getValue(const std::string &date) const
         return it->second;
     it = _database.lower_bound(date);
     if (it == _database.begin())
-        return it->second;
-    if (it == _database.end())
-        it--;
+	{
+		return it->second;
+	}
+	it--;
     return it->second;
 }

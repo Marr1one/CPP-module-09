@@ -6,7 +6,7 @@
 /*   By: maissat <maissat@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/30 13:53:33 by marwan            #+#    #+#             */
-/*   Updated: 2026/02/19 15:12:52 by maissat          ###   ########.fr       */
+/*   Updated: 2026/02/20 15:59:34 by maissat          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,10 +17,7 @@ bool isNumberString(std::string str)
     for (size_t i = 0; str[i] != '\0'; i++)
     {
         if (!isdigit(str[i])&& !isspace(str[i]))
-        {
-            std::cout << "DEBUG str[i] => {" << str[i] << "}\n";
             return (false);
-        }
     }
     return (true);
 }
@@ -91,13 +88,14 @@ bool checkMaxs(std::vector<std::string>v)
 int main(int argc, char **argv)
 {
 	
-	std::cout << "--------------TRI UTILISANT VECTOR---------------\n";
 	
     if (argc < 2) return (std::cerr << "Error: not enough args\n", 1);
     std::vector<std::string> args_vec = argv_to_string<std::vector<std::string> >(argc ,argv);
+	if (args_vec.size() < 1) return (std::cerr << "Error: not enough args\n", 1);
 	if (!detect_duplicate<std::vector<std::string> >(args_vec)) return (std::cerr << "Error: duplicate detected !\n",1);
     if (!parser(args_vec)) return (std::cerr << "Error: invalid inputs\n", 1);
 	if (!checkMaxs(args_vec)) return (std::cerr << "Error: int max or min detecteds\n", 1);
+	std::cout << "--------------TRI UTILISANT VECTOR---------------\n";
     PmergeMe m;
 	std::cout <<"Before :";
 	cleanshow<std::vector<std::string> >(args_vec);
