@@ -6,7 +6,7 @@
 /*   By: maissat <maissat@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/30 13:54:34 by marwan            #+#    #+#             */
-/*   Updated: 2026/02/20 16:01:02 by maissat          ###   ########.fr       */
+/*   Updated: 2026/03/03 16:07:56 by maissat          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,14 +38,11 @@ class PmergeMe
 		template <typename Container>
 		void insertLeftover(Container &c, int leftover)
 		{
-			//if (std::find(c.begin(), c.end(), leftover) == c.end())
-			//{
 				typename Container::iterator it = std::lower_bound(c.begin(), c.end(), leftover);
 				c.insert(it, leftover);
-			//}
 		}
-		void insertBounded(std::vector<int> &c, size_t idx);
-		void insertBounded_deque(std::deque<int> &c, size_t idx);
+		void insertBounded(std::vector<int> &c, int idx);
+		void insertBounded_deque(std::deque<int> &c, int idx);
         int _leftover;
         std::vector<int> _bigs_vect;
         std::vector<int> _smalls_vect;

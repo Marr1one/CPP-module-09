@@ -6,7 +6,7 @@
 /*   By: maissat <maissat@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/30 13:55:18 by marwan            #+#    #+#             */
-/*   Updated: 2026/03/03 14:40:56 by maissat          ###   ########.fr       */
+/*   Updated: 2026/03/03 16:13:50 by maissat          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -164,50 +164,27 @@ void PmergeMe::create_smalls_deque()
 
 void PmergeMe::mergeInsert()
 {
-	//std::vector<bool> inserted (this->_smalls_vect.size(), false);
 	std::vector<int>res=_bigs_vect;
 	std::vector<int> JacobSt = generateJacobSthal<std::vector<int> >(_smalls_vect.size());
-	//for (size_t i = 0; i < JacobSt.size() ; i ++)
-	//{
-	//	size_t idx = JacobSt[i];
-	//	if (idx < _smalls_vect.size() && !inserted[idx])
-	//	{
-	//		insertBounded(res, idx);
-	//		inserted[idx]=true;
-	//	}
-	//}
 	for (size_t i = 0; i < JacobSt.size(); i++)
     {
-        size_t js_idx = JacobSt[i];
+        int js_idx = JacobSt[i];
+        int prev = (i == 0) ? 0 : JacobSt[i - 1] + 1;
 
-        // Borne inférieure : le terme Jacob Stahl précédent (ou 0)
-        size_t prev = (i == 0) ? 0 : (size_t)JacobSt[i - 1] + 1;
-
-        // On descend de js_idx jusqu'à prev (inclus)
-        // ⚠️  on utilise un int signé pour éviter le wrap-around du size_t
-        for (int j = (int)js_idx; j >= (int)prev; j--)
+        for (int j=js_idx; j >=prev; j--)
         {
-            size_t idx = (size_t)j;
-            if (idx < _smalls_vect.size())
-            {
+            int idx = j;
+            if (idx < (int)_smalls_vect.size())
                 insertBounded(res, idx);
-                //inserted[idx] = true;
-            }
         }
     }
-
-	//for(size_t i =0; i < _smalls_vect.size();i++)
-	//{
-	//	if (!inserted[i])
-	//		insertBounded(res, i);
-	//}
 	if (_has_leftover == true)
 		insertLeftover(res, _leftover);
 	_smalls_vect =res;
 }
 
 
-void PmergeMe::insertBounded(std::vector<int> &c, size_t idx)
+void PmergeMe::insertBounded(std::vector<int> &c, int idx)
 {
 	int small = _pairs_vect[idx].first;
 	int big = _pairs_vect[idx].second;
@@ -217,7 +194,7 @@ void PmergeMe::insertBounded(std::vector<int> &c, size_t idx)
 	c.insert(pos,small);
 }
 
-void PmergeMe::insertBounded_deque(std::deque<int> &c, size_t idx)
+void PmergeMe::insertBounded_deque(std::deque<int> &c, int idx)
 {
 	int small = _pairs_deque[idx].first;
 	int big = _pairs_deque[idx].second;
@@ -231,38 +208,17 @@ void PmergeMe::mergeInsert_deque()
 	//std::deque<bool> inserted (this->_smalls_deque.size(), false);
 	std::deque<int>res=_bigs_deque;
 	std::deque<int> JacobSt = generateJacobSthal<std::deque<int> >(_smalls_deque.size());
-	std::cout<<"bigs=";
-	for(size_t i = 0;i <res.size();i++)
-		std::cout <<res[i];
-	std::cout<<std::endl;
-	std::cout<<"Smalls:";
-	for(size_t i = 0;i <_smalls_deque.size();i++)
-		std::cout <<_smalls_deque[i];
-	std::cout<<"\n";
 	for (size_t i = 0; i < JacobSt.size(); i++)
     {
-        size_t js_idx = JacobSt[i];
-
-        // Borne inférieure : le terme Jacob Stahl précédent (ou 0)
-        size_t prev = (i == 0) ? 0 : (size_t)JacobSt[i - 1] + 1;
-
-        // On descend de js_idx jusqu'à prev (inclus)
-        // ⚠️  on utilise un int signé pour éviter le wrap-around du size_t
-        for (int j = (int)js_idx; j >= (int)prev; j--)
+        int js_idx = JacobSt[i];
+        int prev = (i == 0) ? 0 : JacobSt[i - 1] + 1;
+        for (int j = js_idx; j >= prev; j--)
         {
-            size_t idx = (size_t)j;
-            if (idx < _smalls_deque.size())
-            {
+            int idx = j;
+            if (idx < (int)_smalls_deque.size())
                 insertBounded_deque(res, idx);
-                //inserted[idx] = true;
-            }
         }
     }
-	//for(size_t i =0; i < _smalls_deque.size();i++)
-	//{
-	//	if (!inserted[i])
-	//		insertBounded_deque(res, i);
-	//}
 	if (_has_leftover == true)
 		insertLeftover(res, _leftover);
 	_smalls_deque =res;
