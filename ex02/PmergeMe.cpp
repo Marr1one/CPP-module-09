@@ -6,7 +6,7 @@
 /*   By: maissat <maissat@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/30 13:55:18 by marwan            #+#    #+#             */
-/*   Updated: 2026/03/03 16:13:50 by maissat          ###   ########.fr       */
+/*   Updated: 2026/03/04 14:25:13 by maissat          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,7 +48,7 @@ std::deque<std::pair<int, int> > PmergeMe::getPairs_deque() const
 }
 
 
-std::vector<std::pair<int, int> > PmergeMe::makePairs_vect(std::vector<std::string> args)
+void PmergeMe::makePairs_vect(std::vector<std::string> args)
 {
 	std::vector<std::pair<int, int> > pairs;
 
@@ -79,10 +79,9 @@ std::vector<std::pair<int, int> > PmergeMe::makePairs_vect(std::vector<std::stri
 		}
 	}
 	_pairs_vect = pairs;
-	return (pairs);
 }
 
-std::deque<std::pair<int, int> > PmergeMe::makePairs_deque(std::deque<std::string> args)
+void PmergeMe::makePairs_deque(std::deque<std::string> args)
 {
 	std::deque<std::pair<int, int> > pairs;
 
@@ -113,7 +112,6 @@ std::deque<std::pair<int, int> > PmergeMe::makePairs_deque(std::deque<std::strin
 		}
 	}
 	_pairs_deque = pairs;
-	return (pairs);
 }
 
 bool comparePairs(const std::pair<int, int> &a ,const std::pair<int, int> &b)
@@ -205,7 +203,6 @@ void PmergeMe::insertBounded_deque(std::deque<int> &c, int idx)
 }
 void PmergeMe::mergeInsert_deque()
 {
-	//std::deque<bool> inserted (this->_smalls_deque.size(), false);
 	std::deque<int>res=_bigs_deque;
 	std::deque<int> JacobSt = generateJacobSthal<std::deque<int> >(_smalls_deque.size());
 	for (size_t i = 0; i < JacobSt.size(); i++)

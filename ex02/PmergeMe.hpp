@@ -6,7 +6,7 @@
 /*   By: maissat <maissat@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/30 13:54:34 by marwan            #+#    #+#             */
-/*   Updated: 2026/03/03 16:07:56 by maissat          ###   ########.fr       */
+/*   Updated: 2026/03/04 14:16:34 by maissat          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,8 +54,8 @@ class PmergeMe
         ~PmergeMe();
 		PmergeMe(const PmergeMe &other);
 		PmergeMe &operator=(const PmergeMe &other);
-        std::vector<std::pair<int, int> > makePairs_vect(std::vector<std::string> args);
-		std::deque<std::pair<int, int> > makePairs_deque(std::deque<std::string> args);
+        void makePairs_vect(std::vector<std::string> args);
+		void makePairs_deque(std::deque<std::string> args);
         void sort_pairs_vect();
         void create_smalls_vect();
 		void create_smalls_deque();

@@ -6,7 +6,7 @@
 /*   By: maissat <maissat@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/25 22:04:39 by marwan            #+#    #+#             */
-/*   Updated: 2026/02/19 15:49:07 by maissat          ###   ########.fr       */
+/*   Updated: 2026/03/04 14:30:11 by maissat          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -102,7 +102,6 @@ bool RPN::checkExpr()
 {
 	int nbOp = countOp(this->_expression);
 	int nbDigit = countDigit(this->_expression);
-	//if (nbOp==0)return (false);
 	if (nbOp != nbDigit - 1) return (false);
 	else return (true);
 }

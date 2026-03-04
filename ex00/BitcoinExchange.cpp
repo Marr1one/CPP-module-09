@@ -6,7 +6,7 @@
 /*   By: maissat <maissat@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/20 14:20:02 by marwan            #+#    #+#             */
-/*   Updated: 2026/02/20 15:53:40 by maissat          ###   ########.fr       */
+/*   Updated: 2026/03/04 14:31:40 by maissat          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -173,9 +173,7 @@ float BitcoinExchange::getValue(const std::string &date) const
         return it->second;
     it = _database.lower_bound(date);
     if (it == _database.begin())
-	{
 		return it->second;
-	}
 	it--;
     return it->second;
 }

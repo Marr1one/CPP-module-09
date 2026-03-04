@@ -6,7 +6,7 @@
 /*   By: maissat <maissat@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/25 21:41:12 by marwan            #+#    #+#             */
-/*   Updated: 2026/02/12 18:09:34 by maissat          ###   ########.fr       */
+/*   Updated: 2026/03/04 14:31:09 by maissat          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,6 @@ int main(int argc, char **argv)
     try
     {
         RPN expr(argv[1]);
-        //expr.displayExpr();
         int res = expr.calculate();
         std::cout<< res << std::endl;
     }
